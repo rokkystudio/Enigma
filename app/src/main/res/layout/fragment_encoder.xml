@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.encoder.EncoderFragment">
+
+    <LinearLayout
+        android:id="@+id/encoder_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Ввод незашифрованного текста -->
+        <EditText
+            android:id="@+id/input_plain_text"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:hint="Enter text to encode"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:background="@android:drawable/edit_text" />
+
+        <!-- Поле для пароля / ключа -->
+        <EditText
+            android:id="@+id/input_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Encryption key"
+            android:inputType="textPassword" />
+
+        <!-- Выбор алгоритма -->
+        <Spinner
+            android:id="@+id/spinner_algorithm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+
+        <!-- Кнопка Encode -->
+        <Button
+            android:id="@+id/button_encode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Encode" />
+
+        <!-- Вывод зашифрованного текста -->
+        <TextView
+            android:id="@+id/output_encoded_text"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp"
+            android:background="#EEEEEE"
+            android:padding="12dp"
+            android:text="Encoded output will appear here"
+            android:textColor="#000000"
+            android:gravity="top|start"
+            android:textIsSelectable="true" />
+
+    </LinearLayout>
+</ScrollView>
