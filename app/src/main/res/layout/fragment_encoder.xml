@@ -1,65 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/encoder_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:orientation="vertical"
     tools:context=".ui.encoder.EncoderFragment">
 
+    <!-- Прокручиваемая часть с настройками -->
+    <ScrollView
+        android:id="@+id/encoder_scroll_inputs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/encoder_group_inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Ввод текста -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/encoder_text_input_text"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/encoder_edit_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="@string/encoder_edit_input_text"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                android:background="@android:drawable/edit_text" />
+
+            <!-- Ключ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/encoder_text_encryption_key"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/encoder_edit_encryption_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/encoder_edit_encryption_key"
+                android:inputType="textPassword" />
+
+            <!-- Режим -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/encoder_text_cipher_mode"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp" />
+
+            <Spinner
+                android:id="@+id/encoder_spinner_cipher_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/blowfish_modes" />
+
+            <!-- Формат -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/encoder_text_output_format"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp" />
+
+            <CheckBox
+                android:id="@+id/encoder_checkbox_base64"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/encoder_checkbox_base64"
+                android:checked="true" />
+
+            <!-- Specify IV -->
+            <CheckBox
+                android:id="@+id/encoder_checkbox_iv_manual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/encoder_checkbox_iv_manual"
+                android:checked="false"
+                android:layout_marginTop="8dp" />
+
+            <!-- IV -->
+            <LinearLayout
+                android:id="@+id/encoder_group_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/encoder_text_iv_label"
+                    android:textStyle="bold"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp" />
+
+                <EditText
+                    android:id="@+id/encoder_edit_iv_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/encoder_edit_iv_input_hint"
+                    android:inputType="text" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
     <LinearLayout
-        android:id="@+id/encoder_layout"
+        android:id="@+id/encoder_group_bottom_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="#333333"
         android:padding="16dp">
 
-        <!-- Ввод незашифрованного текста -->
-        <EditText
-            android:id="@+id/input_plain_text"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:hint="Enter text to encode"
-            android:gravity="top|start"
-            android:inputType="textMultiLine"
-            android:maxLines="5"
-            android:background="@android:drawable/edit_text" />
-
-        <!-- Поле для пароля / ключа -->
-        <EditText
-            android:id="@+id/input_key"
+        <!-- Заголовок с кнопками -->
+        <LinearLayout
+            android:id="@+id/encoder_group_output_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Encryption key"
-            android:inputType="textPassword" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
 
-        <!-- Выбор алгоритма -->
-        <Spinner
-            android:id="@+id/spinner_algorithm"
+            <TextView
+                android:id="@+id/encoder_text_output_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/encoder_text_output_label"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#AAAAAA"/>
+
+            <!-- Кнопка копирования -->
+            <ImageButton
+                android:id="@+id/encoder_button_share_output"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/shape_button"
+                android:contentDescription="@string/encoder_button_share_output"
+                android:src="@drawable/ic_share"
+                android:backgroundTint="#666"
+                app:tint="#666" />
+
+            <!-- Кнопка копирования -->
+            <ImageButton
+                android:id="@+id/encoder_button_copy_output"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/shape_button"
+                android:contentDescription="@string/encoder_button_copy_output"
+                android:src="@drawable/ic_copy"
+                android:backgroundTint="#666"
+                app:tint="#666" />
+
+            <!-- Кнопка свернуть / развернуть -->
+            <ImageButton
+                android:id="@+id/encoder_button_hide_output"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/shape_button"
+                android:contentDescription="@string/encoder_button_hide_output"
+                android:src="@drawable/ic_expand"
+                android:backgroundTint="#666"
+                app:tint="#666" />
+
+        </LinearLayout>
+
+        <!-- Блок результата, который будет скрываться -->
+        <FrameLayout
+            android:id="@+id/encoder_group_output"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp" />
+            android:layout_height="100dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/encoder_text_output"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#666666"
+                android:padding="12dp"
+                android:hint="@string/encoder_text_output_hint"
+                android:textColor="#000000"
+                android:gravity="top|start"
+                android:textIsSelectable="true" />
+        </FrameLayout>
 
         <!-- Кнопка Encode -->
-        <Button
-            android:id="@+id/button_encode"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/encoder_button_encode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Encode" />
-
-        <!-- Вывод зашифрованного текста -->
-        <TextView
-            android:id="@+id/output_encoded_text"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="16dp"
-            android:background="#EEEEEE"
-            android:padding="12dp"
-            android:text="Encoded output will appear here"
-            android:textColor="#000000"
-            android:gravity="top|start"
-            android:textIsSelectable="true" />
-
+            android:text="@string/encoder_button_encode"
+            android:layout_marginTop="20dp"
+            app:backgroundTint="#DD8800"/>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

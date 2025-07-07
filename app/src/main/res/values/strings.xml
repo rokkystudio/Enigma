@@ -1,6 +1,25 @@
 <resources>
     <string name="app_name">Enigma</string>
+
     <string name="title_encoder">Encoder</string>
     <string name="title_decoder">Decoder</string>
     <string name="title_about">About</string>
+
+    <string name="encoder_text_output_hint">Encoded output will appear here</string>
+
+    <string name="encoder_button_encode">Encode</string>
+    <string name="encoder_button_hide_output">Toggle output visibility</string>
+    <string name="encoder_button_copy_output">Copy output</string>
+    <string name="encoder_button_share_output">Share output</string>
+    <string name="encoder_text_output_label">Encoded result:</string>
+    <string name="encoder_edit_iv_input_hint">e.g. 0000000000000000</string>
+    <string name="encoder_text_iv_label">Optional IV (hex):</string>
+    <string name="encoder_checkbox_iv_manual">Specify IV manually (CBC only)</string>
+    <string name="encoder_checkbox_base64">Use Base64 (disable for HEX)</string>
+    <string name="encoder_text_output_format">Output format:</string>
+    <string name="encoder_text_cipher_mode">Cipher mode:</string>
+    <string name="encoder_edit_encryption_key">Encryption key</string>
+    <string name="encoder_text_encryption_key">Encryption key:</string>
+    <string name="encoder_edit_input_text">Enter text to encode</string>
+    <string name="encoder_text_input_text">Text to encode:</string>
 </resources>

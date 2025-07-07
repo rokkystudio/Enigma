@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Enigma</string>
+
+    <string name="title_encoder">Кодер</string>
+    <string name="title_decoder">Декодер</string>
+    <string name="title_about">Инфа</string>
+
+    <string name="encoder_text_output_hint">Здесь будет закодированный текст</string>
+
+    <string name="encoder_button_encode">Кодировать</string>
+
+    <string name="encoder_button_hide_output">Скрыть панель вывода</string>
+    <string name="encoder_button_copy_output">Скопировать результат вывода</string>
+    <string name="encoder_button_share_output">Поделиться результатом вывода</string>
+    <string name="encoder_text_output_label">Кодированный текст:</string>
+    <string name="encoder_edit_iv_input_hint">например: 0000000000000000</string>
+    <string name="encoder_text_iv_label">Необязательный IV (hex):</string>
+    <string name="encoder_checkbox_iv_manual">Указать IV вручную (только для CBC)</string>
+    <string name="encoder_checkbox_base64">Использовать Base64 (отключите для HEX)</string>
+    <string name="encoder_text_output_format">Формат кодированного вывода:</string>
+    <string name="encoder_text_cipher_mode">Режим шифрования:</string>
+    <string name="encoder_edit_encryption_key">Ключ шифрования</string>
+    <string name="encoder_text_encryption_key">Ключ шифрования:</string>
+    <string name="encoder_edit_input_text">Введите текст для кодирования</string>
+    <string name="encoder_text_input_text">Текст для кодирования:</string>
+</resources>
