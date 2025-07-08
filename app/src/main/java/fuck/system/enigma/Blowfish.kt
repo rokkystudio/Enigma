@@ -64,22 +64,19 @@ class Blowfish
      * @param key Ключ шифрования. Будет приведён к байтам в UTF-8.
      * @return Строка зашифрованного текста в Base64 или HEX, в зависимости от настроек.
      */
-    fun encode(text: String, key: String): String
-    {
-        val cipher = createCipher(Cipher.ENCRYPT_MODE, key)
+    fun encode(text: String, key: String): String {
+        val realIv = iv ?: if (mode == "CBC") SecureRandom().generateSeed(BLOCK_SIZE) else null
+        val cipher = createCipher(Cipher.ENCRYPT_MODE, key, realIv)
         val encrypted = cipher.doFinal(text.toByteArray(Charsets.UTF_8))
 
-        val output = if (mode == "CBC" && embedIv) {
-            cipher.iv + encrypted
-        } else {
-            encrypted
-        }
+        val full = if (mode == "CBC" && embedIv && realIv != null) {
+            realIv + encrypted
+        } else encrypted
 
-        return if (useBase64) {
-            Base64.encodeToString(output, Base64.NO_WRAP)
-        } else {
-            toHexString(output)
-        }
+        return if (useBase64)
+            Base64.encodeToString(full, Base64.NO_WRAP)
+        else
+            toHexString(full)
     }
 
     /**
@@ -91,21 +88,22 @@ class Blowfish
      *
      * @throws IllegalStateException если режим CBC и IV не задан и не встроен.
      */
-    fun decode(text: String, key: String): String
-    {
-        val data: ByteArray = if (useBase64) {
+    fun decode(text: String, key: String): String {
+        val data = if (useBase64)
             Base64.decode(text, Base64.NO_WRAP)
-        } else {
+        else
             hexToByteArray(text)
-        }
 
         val (actualIv, payload) = if (mode == "CBC") {
-            if (iv != null) {
-                iv to data
-            } else if (embedIv) {
-                data.copyOfRange(0, BLOCK_SIZE) to data.copyOfRange(BLOCK_SIZE, data.size)
-            } else {
-                throw IllegalStateException("IV required for CBC mode when embedIv is false")
+            when {
+                iv != null -> iv to data
+                embedIv -> {
+                    require(data.size >= BLOCK_SIZE) { "Data too short for IV" }
+                    val ivPart = data.copyOfRange(0, BLOCK_SIZE)
+                    val encryptedPart = data.copyOfRange(BLOCK_SIZE, data.size)
+                    ivPart to encryptedPart
+                }
+                else -> throw IllegalStateException("IV required for CBC mode")
             }
         } else {
             null to data
@@ -130,27 +128,21 @@ class Blowfish
      *
      * @throws IllegalArgumentException если указан неподдерживаемый режим (не "ECB" и не "CBC").
      */
-    private fun createCipher(modeCode: Int, key: String, ivOverride: ByteArray? = null): Cipher
-    {
-        val cleanKey = key.toByteArray(Charsets.UTF_8)
-        val secretKey = SecretKeySpec(cleanKey, "Blowfish")
-
+    private fun createCipher(modeCode: Int, key: String, ivBytes: ByteArray? = null): Cipher {
+        val secretKey = SecretKeySpec(key.toByteArray(Charsets.UTF_8), "Blowfish")
         val transformation = when (mode) {
-            "ECB" -> "Blowfish/ECB/PKCS5Padding"
             "CBC" -> "Blowfish/CBC/PKCS5Padding"
+            "ECB" -> "Blowfish/ECB/PKCS5Padding"
             else -> throw IllegalArgumentException("Unsupported mode: $mode")
         }
 
         val cipher = Cipher.getInstance(transformation)
-
         if (mode == "CBC") {
-            val realIv = ivOverride ?: iv ?: SecureRandom().generateSeed(BLOCK_SIZE)
-            val ivSpec = IvParameterSpec(realIv)
-            cipher.init(modeCode, secretKey, ivSpec)
+            requireNotNull(ivBytes) { "IV required for CBC mode" }
+            cipher.init(modeCode, secretKey, IvParameterSpec(ivBytes))
         } else {
             cipher.init(modeCode, secretKey)
         }
-
         return cipher
     }
 
@@ -163,7 +155,7 @@ class Blowfish
      * @return Строка в HEX-формате (например, {@code "4f2c9a..."}).
      */
     private fun toHexString(data: ByteArray): String {
-        return data.joinToString("") { ((it.toInt() and 0xFF).toString(16).padStart(2, '0')) }
+        return data.joinToString("") { "%02x".format(it) }
     }
 
     /**
@@ -179,13 +171,10 @@ class Blowfish
      */
     private fun hexToByteArray(hex: String): ByteArray {
         val cleanHex = hex.lowercase().replace(Regex("[^0-9a-f]"), "")
-        require(cleanHex.length % 2 == 0) { "Hex string must have even length" }
+        require(cleanHex.length % 2 == 0) { "Hex must have even length" }
 
-        val result = ByteArray(cleanHex.length / 2)
-        for (i in result.indices) {
-            val byteStr = cleanHex.substring(i * 2, i * 2 + 2)
-            result[i] = byteStr.toInt(16).toByte()
+        return ByteArray(cleanHex.length / 2) {
+            cleanHex.substring(it * 2, it * 2 + 2).toInt(16).toByte()
         }
-        return result
     }
 }

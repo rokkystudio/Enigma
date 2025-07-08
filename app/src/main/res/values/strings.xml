@@ -12,8 +12,8 @@
     <string name="encoder_button_copy_output">Copy output</string>
     <string name="encoder_button_share_output">Share output</string>
     <string name="encoder_text_output_label">Encoded result:</string>
-    <string name="encoder_edit_iv_input_hint">e.g. 0000000000000000</string>
-    <string name="encoder_text_iv_label">Optional IV (hex):</string>
+    <string name="encoder_edit_iv_input_hint">e.g. 0102030405060708090a0b0c0d0e0f10</string>
+    <string name="encoder_text_iv_label">Encoder vector IV (hex):</string>
     <string name="encoder_checkbox_iv_manual">Specify IV manually (CBC only)</string>
     <string name="encoder_checkbox_base64">Use Base64 (disable for HEX)</string>
     <string name="encoder_text_output_format">Output format:</string>
@@ -22,4 +22,35 @@
     <string name="encoder_text_encryption_key">Encryption key:</string>
     <string name="encoder_edit_input_text">Enter text to encode</string>
     <string name="encoder_text_input_text">Text to encode:</string>
+
+    <string name="toast_nothing_to_share">Nothing to share</string>
+    <string name="toast_text_and_key_required">Text and key required</string>
+    <string name="toast_copied">Copied</string>
+
+    <string name="encoder_message_invalid_iv_hex">Invalid IV hex</string>
+    <string name="encoder_message_error">Error: %1$s</string>
+    <string name="encoder_message_share_via">Share encoded text via</string>
+    <string name="encoder_message_clipboard">Copied text</string>
+
+    <string name="decoder_text_input_text">Text to decode:</string>
+    <string name="decoder_edit_input_text">Enter text to decode</string>
+    <string name="decoder_text_decryption_key">Decryption key:</string>
+    <string name="decoder_edit_decryption_key">Decryption key</string>
+    <string name="decoder_text_cipher_mode">Cipher mode:</string>
+    <string name="decoder_text_input_format">Input format:</string>
+    <string name="decoder_checkbox_base64">Use Base64 (disable for HEX)</string>
+    <string name="decoder_checkbox_iv_manual">Specify IV manually (CBC only)</string>
+    <string name="decoder_text_iv_label">Decoder vector IV (hex):</string>
+    <string name="decoder_edit_iv_input_hint">e.g. 0102030405060708090a0b0c0d0e0f10</string>
+    <string name="decoder_text_output_label">Decoded result:</string>
+    <string name="decoder_button_share_output">Share output</string>
+    <string name="decoder_button_copy_output">Copy output</string>
+    <string name="decoder_button_hide_output">Toggle output visibility</string>
+    <string name="decoder_text_output_hint">Decoded output will appear here</string>
+    <string name="decoder_button_decode">Decode</string>
+
+    <string name="decoder_message_invalid_iv_hex">Invalid IV hex</string>
+    <string name="decoder_message_error">Error: %1$s</string>
+    <string name="decoder_message_share_via">Share decoded text via</string>
+    <string name="decoder_message_clipboard">Copied text</string>
 </resources>

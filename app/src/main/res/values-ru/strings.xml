@@ -12,9 +12,9 @@
     <string name="encoder_button_hide_output">Скрыть панель вывода</string>
     <string name="encoder_button_copy_output">Скопировать результат вывода</string>
     <string name="encoder_button_share_output">Поделиться результатом вывода</string>
-    <string name="encoder_text_output_label">Кодированный текст:</string>
-    <string name="encoder_edit_iv_input_hint">например: 0000000000000000</string>
-    <string name="encoder_text_iv_label">Необязательный IV (hex):</string>
+    <string name="encoder_text_output_label">Закодированный текст:</string>
+    <string name="encoder_edit_iv_input_hint">например: 0102030405060708090a0b0c0d0e0f10</string>
+    <string name="encoder_text_iv_label">Вектор кодирования IV (hex):</string>
     <string name="encoder_checkbox_iv_manual">Указать IV вручную (только для CBC)</string>
     <string name="encoder_checkbox_base64">Использовать Base64 (отключите для HEX)</string>
     <string name="encoder_text_output_format">Формат кодированного вывода:</string>
@@ -23,4 +23,35 @@
     <string name="encoder_text_encryption_key">Ключ шифрования:</string>
     <string name="encoder_edit_input_text">Введите текст для кодирования</string>
     <string name="encoder_text_input_text">Текст для кодирования:</string>
+
+    <string name="toast_nothing_to_share">Нечем поделиться</string>
+    <string name="toast_text_and_key_required">Требуется текст и ключ</string>
+    <string name="toast_copied">Скопировано</string>
+
+    <string name="encoder_message_invalid_iv_hex">Неверно указан IV HEX</string>
+    <string name="encoder_message_error">Ошибка: %1$s</string>
+    <string name="encoder_message_share_via">Поделиться закодированным текстом</string>
+    <string name="encoder_message_clipboard">Скопированный текст</string>
+
+    <string name="decoder_text_input_text">Закодированный текст:</string>
+    <string name="decoder_edit_input_text">Введите текст для раскодирования</string>
+    <string name="decoder_text_decryption_key">Ключ для раскодирования:</string>
+    <string name="decoder_edit_decryption_key">Ключ для раскодирования</string>
+    <string name="decoder_text_cipher_mode">Режим дешифровки:</string>
+    <string name="decoder_text_input_format">Формат закодированного текста:</string>
+    <string name="decoder_checkbox_base64">Использовать Base64 (отключите для HEX)</string>
+    <string name="decoder_checkbox_iv_manual">Указать IV вручную (только для CBC)</string>
+    <string name="decoder_text_iv_label">Вектор раскодирования IV (hex):</string>
+    <string name="decoder_edit_iv_input_hint">например: 0102030405060708090a0b0c0d0e0f10</string>
+    <string name="decoder_text_output_label">Раскодированный текст:</string>
+    <string name="decoder_button_share_output">Поделиться результатом вывода</string>
+    <string name="decoder_button_copy_output">Скопировать результат вывода</string>
+    <string name="decoder_button_hide_output">Скрыть панель вывода</string>
+    <string name="decoder_text_output_hint">Здесь будет раскодированный текст</string>
+    <string name="decoder_button_decode">Раскодировать</string>
+
+    <string name="decoder_message_invalid_iv_hex">Неверно указан IV HEX</string>
+    <string name="decoder_message_error">Ошибка: %1$s</string>
+    <string name="decoder_message_share_via">Поделиться раскодированным текстом</string>
+    <string name="decoder_message_clipboard">Скопированный текст</string>
 </resources>

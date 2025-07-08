@@ -1,22 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/decoder_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.decoder.DecoderFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+    <!-- Прокручиваемая часть с настройками -->
+    <ScrollView
+        android:id="@+id/decoder_scroll_inputs"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/decoder_group_inputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Ввод зашифрованного текста -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/decoder_text_input_text"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/decoder_edit_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="@string/decoder_edit_input_text"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                tools:ignore="Autofill" />
+
+            <!-- Ключ -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/decoder_text_decryption_key"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp" />
+
+            <EditText
+                android:id="@+id/decoder_edit_decryption_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/decoder_edit_decryption_key"
+                android:inputType="textPassword"
+                tools:ignore="Autofill" />
+
+            <!-- Режим -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/decoder_text_cipher_mode"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp" />
+
+            <Spinner
+                android:id="@+id/decoder_spinner_cipher_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/blowfish_modes" />
+
+            <!-- Формат -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/decoder_text_input_format"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="4dp" />
+
+            <CheckBox
+                android:id="@+id/decoder_checkbox_base64"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/decoder_checkbox_base64"
+                android:checked="true" />
+
+            <!-- Указать IV вручную -->
+            <CheckBox
+                android:id="@+id/decoder_checkbox_iv_manual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/decoder_checkbox_iv_manual"
+                android:checked="false"
+                android:layout_marginTop="8dp" />
+
+            <!-- IV -->
+            <LinearLayout
+                android:id="@+id/decoder_group_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/decoder_text_iv_label"
+                    android:textStyle="bold"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="4dp" />
+
+                <EditText
+                    android:id="@+id/decoder_edit_iv_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/decoder_edit_iv_input_hint"
+                    android:inputType="text"
+                    tools:ignore="Autofill" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Нижняя панель -->
+    <LinearLayout
+        android:id="@+id/decoder_group_bottom_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="vertical"
+        android:background="#333333"
+        android:padding="16dp">
+
+        <!-- Заголовок с кнопками -->
+        <LinearLayout
+            android:id="@+id/decoder_group_output_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/decoder_text_output_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/decoder_text_output_label"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#AAAAAA"/>
+
+            <ImageButton
+                android:id="@+id/decoder_button_share_output"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/shape_button"
+                android:contentDescription="@string/decoder_button_share_output"
+                android:src="@drawable/ic_share"
+                android:backgroundTint="#666"
+                app:tint="#666" />
+
+            <ImageButton
+                android:id="@+id/decoder_button_copy_output"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/shape_button"
+                android:contentDescription="@string/decoder_button_copy_output"
+                android:src="@drawable/ic_copy"
+                android:backgroundTint="#666"
+                app:tint="#666" />
+
+            <ImageButton
+                android:id="@+id/decoder_button_hide_output"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/shape_button"
+                android:contentDescription="@string/decoder_button_hide_output"
+                android:src="@drawable/ic_expand"
+                android:backgroundTint="#666"
+                app:tint="#666" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/decoder_group_output"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/decoder_text_output"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#666666"
+                android:padding="12dp"
+                android:hint="@string/decoder_text_output_hint"
+                android:textColor="#000000"
+                android:gravity="top|start"
+                android:textIsSelectable="true" />
+        </FrameLayout>
+
+        <!-- Кнопка Decode -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/decoder_button_decode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/decoder_button_decode"
+            android:layout_marginTop="20dp"
+            app:backgroundTint="#DD8800"/>
+    </LinearLayout>
+</LinearLayout>

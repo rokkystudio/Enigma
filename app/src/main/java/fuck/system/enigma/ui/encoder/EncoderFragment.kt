@@ -90,10 +90,13 @@ class EncoderFragment : Fragment()
         buttonShare.setOnClickListener { onShareClicked() }
     }
 
-    private fun onShareClicked() {
+    private fun onShareClicked()
+    {
         val text = outputText.text.toString()
-        if (text.isBlank() || text.startsWith("Error")) {
-            Toast.makeText(requireContext(), "Nothing to share", Toast.LENGTH_SHORT).show()
+        val errorPrefix = getString(R.string.encoder_message_error, "").removeSuffix("")
+
+        if (text.isBlank() || text.startsWith(errorPrefix)) {
+            Toast.makeText(requireContext(), getString(R.string.toast_nothing_to_share), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -102,7 +105,8 @@ class EncoderFragment : Fragment()
             putExtra(android.content.Intent.EXTRA_TEXT, text)
             type = "text/plain"
         }
-        val chooser = android.content.Intent.createChooser(intent, "Share encoded text via")
+        val chooser = android.content.Intent.createChooser(intent,
+            getString(R.string.encoder_message_share_via))
         startActivity(chooser)
     }
 
@@ -111,7 +115,7 @@ class EncoderFragment : Fragment()
         TransitionManager.beginDelayedTransition(parent, AutoTransition())
 
         resultGroup.visibility = if (visible) View.VISIBLE else View.GONE
-        resultLabel.fadeVisibility(visible) // Анимация появления/скрытия лейбла
+        resultLabel.fadeVisibility(visible)
 
         buttonHide.setImageResource(
             if (visible) R.drawable.ic_collapse else R.drawable.ic_expand
@@ -131,15 +135,16 @@ class EncoderFragment : Fragment()
         }
     }
 
-    private fun onEncodeClicked()
-    {
+    private fun onEncodeClicked() {
         val key = inputKey.text.toString()
         val text = inputText.text.toString()
         val mode = spinnerMode.selectedItem.toString()
         val ivHex = inputIv.text.toString().takeIf { it.isNotBlank() }
 
         if (key.isEmpty() || text.isEmpty()) {
-            Toast.makeText(requireContext(), "Text and key required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.toast_text_and_key_required),
+                Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -148,31 +153,34 @@ class EncoderFragment : Fragment()
         viewModel.mode.value = mode
         viewModel.ivHex.value = ivHex
 
+        val userIv = viewModel.userIv.value == true
+
         val cipher = Blowfish().apply {
             setMode(mode)
             setUseBase64(checkboxBase64.isChecked)
-            setEmbedIv(viewModel.userIv.value == true)
-            setIv(ivHex?.let { hexToByteArray(it) })
+            setEmbedIv(!userIv)
+            setIv(if (userIv) ivHex?.let { hexToByteArray(it) } else null)
         }
 
         try {
             val result = cipher.encode(text, key)
             viewModel.result.value = result
+            viewModel.isResultVisible.value = true
         } catch (e: Exception) {
-            viewModel.result.value = "Error: ${e.message}"
+            viewModel.result.value = getString(R.string.encoder_message_error, e.message)
         }
     }
 
     private fun onCopyClicked() {
         val clipboard = requireContext().getSystemService(android.content.ClipboardManager::class.java)
-        val clip = android.content.ClipData.newPlainText("Encoded Text", outputText.text)
+        val clip = android.content.ClipData.newPlainText(getString(R.string.encoder_message_clipboard), outputText.text)
         clipboard.setPrimaryClip(clip)
-        Toast.makeText(requireContext(), "Copied", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.toast_copied), Toast.LENGTH_SHORT).show()
     }
 
     private fun hexToByteArray(hex: String): ByteArray {
         val clean = hex.lowercase().replace(Regex("[^0-9a-f]"), "")
-        require(clean.length % 2 == 0) { "Invalid IV hex" }
+        require(clean.length % 2 == 0) { getString(R.string.encoder_message_invalid_iv_hex) }
         return ByteArray(clean.length / 2) {
             clean.substring(it * 2, it * 2 + 2).toInt(16).toByte()
         }

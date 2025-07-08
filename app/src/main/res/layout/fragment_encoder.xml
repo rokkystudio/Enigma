@@ -40,7 +40,7 @@
                 android:gravity="top|start"
                 android:inputType="textMultiLine"
                 android:maxLines="5"
-                android:background="@android:drawable/edit_text" />
+                tools:ignore="Autofill" />
 
             <!-- Ключ -->
             <TextView
@@ -56,7 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/encoder_edit_encryption_key"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                tools:ignore="Autofill" />
 
             <!-- Режим -->
             <TextView
@@ -119,7 +120,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/encoder_edit_iv_input_hint"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    tools:ignore="Autofill" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
