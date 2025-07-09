@@ -2,6 +2,8 @@
 
 🛡 **Enigma** — криптографический инструмент для Android, чтобы **шифровать и расшифровывать текст**, используя алгоритм **Blowfish**.
 
+![Иконка приложения](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp)
+
 ---
 
 ## ✨ Возможности
@@ -16,9 +18,18 @@
 
 ## 📸 Скриншоты
 
-![Скриншот приложения](files/screenshot_01.png)
-![Скриншот приложения](files/screenshot_02.png)
-![Скриншот приложения](files/screenshot_03.png)
+<p align="center">
+  <img src="files/screenshot_01.png" alt="Скриншот 1" width="30%">
+  <img src="files/screenshot_02.png" alt="Скриншот 2" width="30%">
+  <img src="files/screenshot_03.png" alt="Скриншот 3" width="30%">
+</p>
+
+---
+
+## 🚀 Установка
+
+📦 **APK релиз** (ручная установка):
+- Скачать из [релизов](https://github.com/rokkystudio/enigma/releases)
 
 ---
 
@@ -32,7 +43,9 @@ Enigma:
 
 ---
 
-## 🚀 Установка
+## 🛡 License
 
-📦 **APK релиз** (ручная установка):
-- Скачать из [релизов](https://github.com/rokkystudio/enigma/releases)
+This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](LICENSE).
+
+- ✅ Free for personal, educational and non-commercial use
+- ❌ Commercial use, ads, and organizational use are prohibited
