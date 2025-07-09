@@ -45,7 +45,7 @@ Enigma:
 
 ## 🛡 License
 
-This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](LICENSE).
+This project is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](/LICENSE).
 
 - ✅ Free for personal, educational and non-commercial use
 - ❌ Commercial use, ads, and organizational use are prohibited
